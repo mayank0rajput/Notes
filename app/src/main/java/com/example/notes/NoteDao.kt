@@ -11,11 +11,15 @@ interface NoteDao {
 //    We need to run these functions on background so that our App doesn't becomes laggy
 //    We will use suspend keyword in Kotlin to apply Coroutines.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(note: Note)
+    suspend fun insert(note: Note) : Long{
+        return 1L
+    }
     @Delete
-    suspend fun delete(note: Note)
+    suspend fun delete(note: Note) : Long {
+        return 1L
+    }
 //    We need to know recent updates in the data that we get in following function
 //    So we will use the LiveData Component of Architecture
-    @Query("Select * from notes_table order by id ASC")
-    suspend fun getAllNotes(): LiveData<List<Note>>
+    @Query("Select * from notes_table")
+    fun getAllNotes(): LiveData<List<Note>>
 }

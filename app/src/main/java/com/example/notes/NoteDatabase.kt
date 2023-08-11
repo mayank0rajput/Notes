@@ -1,14 +1,16 @@
 package com.example.notes
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
-abstract class NoteDatabase: RoomDatabase() {
+@Database(entities = [Note::class], version = 1, exportSchema = false)
+public abstract class NoteDatabase: RoomDatabase() {
     abstract fun getNoteDao() : NoteDao
 //    This is a Singleton to ensure that it will create only a single interface of Database
     companion object {
-        private var INSTANCE: NoteDatabase? = null
+    @Volatile
+    private var INSTANCE: NoteDatabase? = null
         fun getDatabase(context: Context):NoteDatabase{
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
