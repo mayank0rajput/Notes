@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         this.viewModel = ViewModelProvider(this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNote.observe(this, Observer {
-            
+
         })
     }
 }
