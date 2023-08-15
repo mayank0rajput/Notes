@@ -6,6 +6,9 @@ plugins {
 }
 
 android {
+    dataBinding{
+        true
+    }
     namespace 'com.example.notes'
     compileSdk 34
 
@@ -26,7 +29,8 @@ android {
         }
     }
     buildFeatures {
-        viewBinding = true
+        dataBinding true
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -62,8 +66,9 @@ dependencies {
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:$room_version")
 

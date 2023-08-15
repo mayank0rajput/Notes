@@ -1,11 +1,15 @@
 package com.example.notes
 
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notes.R.id.input
 
 class MainActivity : AppCompatActivity() ,INotesRVAdapter{
     lateinit var viewModel: NoteViewModel
@@ -15,19 +19,27 @@ class MainActivity : AppCompatActivity() ,INotesRVAdapter{
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = NotesRVAdapter(this,this)
+        val adapter = NotesRVAdapter(this, this)
         recyclerView.adapter = adapter
 
-        this.viewModel = ViewModelProvider(this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
-        viewModel.allNote.observe(this, Observer {list->
+        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        viewModel.allNote.observe(this, Observer { list ->
             list?.let {
                 adapter.updateList(it)
             }
         })
     }
-
     override fun onItemClicked(note: Note) {
-        viewModel.deleteNode(note)
+        viewModel.deleteNote(note)
+    }
+
+    fun submitData(view: View) {
+        val input = findViewById<EditText>(input)
+        val noteText = input.text.toString()
+        if (noteText.isNotEmpty()) {
+            viewModel.insertNote(Note(noteText))
+            Toast.makeText(this, "$noteText Inserted", Toast.LENGTH_LONG).show()
+
+        }
     }
 }
